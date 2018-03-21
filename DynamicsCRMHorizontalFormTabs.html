@@ -1,0 +1,138 @@
+<html><head>
+
+  <title></title>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="XrmServiceToolkit" type="text/javascript"></script>
+  <style type="text/css">
+    
+  body {
+    font-family: Verdana, sans-serif;
+    font-size: 12px;
+    margin-left: 0px;
+  }
+
+  li {
+    display: inline-block;
+    color: rgba(13, 12, 12, 0.5);
+    margin-right: 5px;
+    margin-top: 5px;    
+  }
+
+  a {
+    color: rgba(13, 12, 12, 0.5);
+    text-decoration: none;
+  }
+
+  #tabList {
+    padding: 0px;
+  }
+
+  .active a {
+    color: rgba(13, 12, 12, 1);    
+    text-decoration: underline;
+  }
+
+  a:hover {
+    cursor:pointer;
+    color:inherit;
+    text-decoration: none;
+    color: rgb(13, 12, 12);
+    transition: 0.2s;
+  }
+
+  </style>
+<meta charset="utf-8"></head>
+<body>
+  <ul id="tabList">    
+
+  </ul>
+<script type="text/javascript">
+  
+
+  //Run the javascript when the document is ready
+  document.onreadystatechange = function () {
+    if (document.readyState == "complete") {
+      
+      setAllTabs();
+      selectTab($("#tabList li").first().children("a"));
+    }
+  }
+
+  //On click function on the tabs
+  $("#tabList").on("click", ".accountTab", function() {     
+  
+    var isItCurrentTab = unselectTabs($(this));
+    if (isItCurrentTab == false)
+      {
+        selectTab($(this));
+      }
+  });
+
+  //Create a menu link for all the tabs on the page.
+  function setAllTabs() {
+    var allTabs = window.parent.Xrm.Page.ui.tabs.get();
+
+    allTabs.forEach(function(tab, index) {
+      var tabName = tab.getName().replace(/ /g, "_");
+      tabText = tab.getName().toUpperCase();
+
+      //Setting html to append
+      var tabToAdd = "<li>|</li><li><a class=\"accountTab\" id="+tabName+" >"+tabText+"</a></li>";
+      if (index == 1) 
+      {
+        tabToAdd = "<li><a class=\"accountTab\" id="+tabName+" >"+tabText+"</a></li>";         
+      }
+
+      //Append line to list 
+      if (index != 0)
+      {
+        $('#tabList').append(tabToAdd);
+        tab.setVisible(false);
+      }     
+    }); 
+
+  }
+
+//Unselects the old active tab, by making it invisible and collapse the tab.
+  function unselectTabs(selectedTab) {
+
+    var currentTabId = $(".active").children("a").attr("id").replace(/_/g, " ");
+    var newTabId = selectedTab.attr("id");
+
+    //Check if current tab is the one that is selected, if it is do nothing. 
+    //If it's not then unselect the current tab but collapsing it, remove class and make i invisible.
+    if (currentTabId == newTabId)
+    {
+      return true;
+    }
+    else {
+      var currentTabXrm = window.parent.Xrm.Page.ui.tabs.get(currentTabId);
+      $("li").removeClass("active");
+      currentTabXrm.setDisplayState("collapse");
+      currentTabXrm.setVisible(false);       
+    }    
+
+    return false;
+  }
+
+//Make the selected tab visible and expanded.
+  function selectTab(selectTab) {
+
+    //Set the selected tabs parent as active.
+    selectTab.parent().addClass("active");
+    var selectedID = selectTab.attr("id").replace(/_/g, " "); 
+    
+    var selectedTabXrm =  window.parent.Xrm.Page.ui.tabs.get(selectedID);
+
+    //Set the selected tab to be visible
+    selectedTabXrm.setVisible(true);
+
+    //Set the selected tab to expand
+    selectedTabXrm.setDisplayState("expanded");
+  }
+
+
+</script>
+
+
+</body></html>
