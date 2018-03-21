@@ -1,5 +1,5 @@
 
-# dynamics365formTabs
+# Dynamics CRM Horizontal Form Tabs
 A web resource that adds horizontal form tabs to a given form in dynamics crm older than CRM 2016.  
 
 <h2>Prerequisites</h2>
