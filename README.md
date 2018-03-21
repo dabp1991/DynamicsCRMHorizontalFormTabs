@@ -12,7 +12,7 @@ A web resource that adds horizontal form tabs to a given form in dynamics crm ol
 <div>
 <ol>
 <li> Rename the toolkit script source in the head of the web ressource, so that it matches the source name of your toolkit web ressource. </li>
-<li>Create a new tab on (fx. menu) and add iframe to it, with the formtab as the resource   </li>
+<li>Create a new tab on (fx. menu) and add an iframe to it, with the formtab as the resource</li>
 <li>Make sure to uncheck the "Show the label of this tab on the form" on all the tabs, so that the normal tab function doesn't display</li>
 <li>Rename the tab names to match the name of the label (the "Name" of the tab is used as the label of the tab)</li>
 <li>Publish the changes and you now got horizontal tabs</li>
